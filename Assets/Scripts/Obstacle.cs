@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    [SerializeField] float speed = 5f;
     void Update()
     {
         Move();
@@ -13,7 +12,7 @@ public class Obstacle : MonoBehaviour
 
     private void Move()
     {
-        this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z + speed * Time.deltaTime);
+        this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z + RoadLoop.speed * Time.deltaTime);
     }
 
     

@@ -6,7 +6,7 @@ public class ObstacleController : MonoBehaviour
 {
     [SerializeField]List<Obstacle> obstacles;
     float timeeSpawn = 5f;
-
+    public static float speedSpawn = 5f;
     private void Update()
     {
         SpawnObstacle();
@@ -18,7 +18,7 @@ public class ObstacleController : MonoBehaviour
         {
             int index = Random.Range(0, obstacles.Count);
             Instantiate(obstacles[index], new Vector3(Random.Range(-2f, 2f), 0f, -25f), Quaternion.identity);
-            timeeSpawn = 5f;
+            timeeSpawn = speedSpawn;
         }
         timeeSpawn -= Time.deltaTime;
     }

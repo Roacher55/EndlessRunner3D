@@ -7,7 +7,7 @@ public class RoadLoop : MonoBehaviour
     [SerializeField] Transform road1Transform;
     [SerializeField] Transform road2Transform;
     float destination;
-    [SerializeField] float speed =5f;
+    public static float speed =5f;
 
     private void Start()
     {
@@ -24,6 +24,6 @@ public class RoadLoop : MonoBehaviour
         {
             road1Transform.position = new Vector3(road1Transform.position.x, road1Transform.position.y, road1Transform.position.z + speed * Time.deltaTime);
             road2Transform.position = new Vector3(road2Transform.position.x, road2Transform.position.y, road2Transform.position.z + speed * Time.deltaTime);
-        }            
+        }
     }
 }

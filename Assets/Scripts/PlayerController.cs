@@ -75,6 +75,9 @@ public class PlayerController : MonoBehaviour
 
             PlayerPrefs.Save();
 
+            RoadLoop.speed = 5f;
+            ObstacleController.speedSpawn = 5;
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         
