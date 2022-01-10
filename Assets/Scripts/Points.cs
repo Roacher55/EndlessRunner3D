@@ -10,6 +10,7 @@ public class Points : MonoBehaviour
     float speedUp = 0;
     [SerializeField] Text pointsText;
     [SerializeField] Text speedUptext;
+    
 
     private void Start()
     {

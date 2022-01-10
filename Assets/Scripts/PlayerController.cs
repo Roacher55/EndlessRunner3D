@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] GameObject canvasMenu;
@@ -10,6 +11,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Points points;
     float  timerNextMove = 0.25f;
     float moveBy = 0.5f;
+    [SerializeField] List<Image> hearthImage;
+    int hearthCount;
+
+    private void Start()
+    {
+        hearthCount = hearthImage.Count;
+    }
 
     // Update is called once per frame
     void Update()
@@ -52,33 +60,39 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "Obstacle")
         {
-            PlayerPrefs.SetInt("LastGamePoints", points.points);
+            hearthCount--;
+            hearthImage[hearthCount].color = Color.gray;
 
-            List<int> playerPrefs = new List<int>();
-            playerPrefs.Add(PlayerPrefs.GetInt("FirstPlace"));
-            playerPrefs.Add(PlayerPrefs.GetInt("SecundPlace"));
-            playerPrefs.Add(PlayerPrefs.GetInt("ThirdPlace"));
-
-            var tempScore = points.points;
-            for (int i = 0; i < playerPrefs.Count; i++)
+            if (hearthCount <= 0)
             {
-                if (tempScore > playerPrefs[i])
+                PlayerPrefs.SetInt("LastGamePoints", points.points);
+
+                List<int> playerPrefs = new List<int>();
+                playerPrefs.Add(PlayerPrefs.GetInt("FirstPlace"));
+                playerPrefs.Add(PlayerPrefs.GetInt("SecundPlace"));
+                playerPrefs.Add(PlayerPrefs.GetInt("ThirdPlace"));
+
+                var tempScore = points.points;
+                for (int i = 0; i < playerPrefs.Count; i++)
                 {
-                    int temp = playerPrefs[i];
-                    playerPrefs[i] = tempScore;
-                    tempScore = temp;
+                    if (tempScore > playerPrefs[i])
+                    {
+                        int temp = playerPrefs[i];
+                        playerPrefs[i] = tempScore;
+                        tempScore = temp;
+                    }
                 }
+                PlayerPrefs.SetInt("FirstPlace", playerPrefs[0]);
+                PlayerPrefs.SetInt("SecundPlace", playerPrefs[1]);
+                PlayerPrefs.SetInt("ThirdPlace", playerPrefs[2]);
+
+                PlayerPrefs.Save();
+
+                RoadLoop.speed = 5f;
+                ObstacleController.speedSpawn = 5;
+
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
-            PlayerPrefs.SetInt("FirstPlace", playerPrefs[0]);
-            PlayerPrefs.SetInt("SecundPlace", playerPrefs[1]);
-            PlayerPrefs.SetInt("ThirdPlace", playerPrefs[2]);
-
-            PlayerPrefs.Save();
-
-            RoadLoop.speed = 5f;
-            ObstacleController.speedSpawn = 5;
-
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         
     }
